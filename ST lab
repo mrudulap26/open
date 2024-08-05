@@ -96,10 +96,6 @@ int main()
 
 NEXT DATE 2
 
-/* Design, develop, code and run the program in any suitable language to implement the NextDate
-function. Analyze it from the perspective of boundary value testing and equivalence class analysis.
-Derive different test cases, execute these test cases and discuss the test results. */
-
 #include <stdio.h>
 int check(int day, int month)
 {
