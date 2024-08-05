@@ -1,0 +1,385 @@
+COMISSION 1 & 3
+
+#include <stdio.h>
+int main()
+{
+    int locks, stocks, barrels, tlocks, tstocks, tbarrels;
+    float lprice, sprice, bprice, sales, comm;
+    int c1, c2, c3, temp;
+    lprice = 45.0;
+    sprice = 30.0;
+    bprice = 25.0;
+    tlocks = 0;
+    tstocks = 0;
+    tbarrels = 0;
+    printf("\n enter the number of locks and to exit the loop enter -1 for locks\n");
+    scanf("%d", &locks);
+    while (locks != -1)
+    {
+        c1 = (locks <= 0 || locks > 70);
+        printf("enter the number of stocks and barrels\n");
+        scanf("%d%d", &stocks, &barrels);
+        c2 = (stocks <= 0 || stocks > 80);
+        c3 = (barrels <= 0 || barrels > 90);
+        if (c1)
+            printf("value of locks not in the range 1..70 ");
+        else
+        {
+            temp = tlocks + locks;
+            if (temp > 70)
+                printf("new total locks =%d not in the range 1..70 ", temp);
+            else
+                tlocks = temp;
+        }
+        printf("total locks = %d\n", tlocks);
+        if (c2)
+            printf("value of stocks not in the range 1..80 ");
+        else
+        {
+            temp = tstocks + stocks;
+            if (temp > 80)
+                printf("new total stocks =%d not in the range 1..80 ", temp);
+            else
+                tstocks = temp;
+        }
+        printf("total stocks=%d\n", tstocks);
+        if (c3)
+            printf("value of barrels not in the range 1..90 ");
+        else
+        {
+            temp = tbarrels + barrels;
+            if (temp > 90)
+                printf("new total barrels =%d not in the range 1..90 ", temp);
+            else
+                tbarrels = temp;
+        }
+        printf("total barrels=%d", tbarrels);
+        printf("\n enter the number of locks and to exit the loop enter -1 for locks \n");
+        scanf("%d", &locks);
+    }
+    printf("\n total locks = %d\n total stocks =%d\n total barrels =%d\n", tlocks, tstocks, tbarrels);
+    sales = lprice * tlocks + sprice * tstocks + bprice * tbarrels;
+    printf("\n the total sales=%f\n", sales);
+    if (sales > 0)
+    {
+        if (sales > 1800.0)
+        {
+            comm = 0.10 * 1000.0;
+            comm = comm + 0.15 * 800;
+            comm = comm + 0.20 * (sales - 1800.0);
+        }
+        else if (sales > 1000)
+        {
+            comm = 0.10 * 1000;
+            comm = comm + 0.15 * (sales - 1000.0);
+        }
+        else
+            comm = 0.10 * sales;
+        printf("the commission is=%f\n", comm);
+    }
+    else
+        printf("there is no sales\n");
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+NEXT DATE 2
+
+/* Design, develop, code and run the program in any suitable language to implement the NextDate
+function. Analyze it from the perspective of boundary value testing and equivalence class analysis.
+Derive different test cases, execute these test cases and discuss the test results. */
+
+#include <stdio.h>
+int check(int day, int month)
+{
+    if ((month == 4 || month == 6 || month == 9 || month == 11) && day == 31)
+        return 1;
+    else
+        return 0;
+}
+int isleap(int year)
+{
+    if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
+        return 1;
+    else
+        return 0;
+}
+int main()
+{
+    int day, month, year, tomm_day, tomm_month, tomm_year;
+    char flag;
+    do
+    {
+        flag = 'y';
+        printf("\nenter the today's date in the form of dd mm yyyy\n");
+        scanf("%d%d%d", &day, &month, &year);
+        tomm_month = month;
+        tomm_year = year;
+        if (day < 1 || day > 31)
+        {
+            printf("value of day, not in the range 1...31\n");
+            flag = 'n';
+        }
+        if (month < 1 || month > 12)
+        {
+            printf("value of month, not in the range 1....12\n");
+            flag = 'n';
+        }
+        else if (check(day, month))
+        {
+            printf("value of day, not in the range day<=30");
+            flag = 'n';
+        }
+        if (year < 1812 || year > 2019)
+        {
+            printf("value of year, not in the range 1812.......2019\n");
+            flag = 'n';
+        }
+        if (month == 2)
+        {
+            if (isleap(year) && day > 29)
+            {
+                printf("invalid date input for leap year");
+                flag = 'n';
+            }
+            else if (!(isleap(year)) && day > 28)
+            {
+                printf("invalid date input for not a leap year");
+                flag = 'n';
+            }
+        }
+    } while (flag == 'n');
+    switch (month)
+    {
+    case 1:
+    case 3:
+    case 5:
+    case 7:
+    case 8:
+    case 10:
+        if (day < 31)
+            tomm_day = day + 1;
+        else
+        {
+            tomm_day = 1;
+            tomm_month = month + 1;
+        }
+        break;
+    case 4:
+    case 6:
+    case 9:
+    case 11:
+        if (day < 30)
+            tomm_day = day + 1;
+        else
+        {
+            tomm_day = 1;
+            tomm_month = month + 1;
+        }
+        break;
+    case 12:
+        if (day < 31)
+            tomm_day = day + 1;
+        else
+        {
+            tomm_day = 1;
+            tomm_month = 1;
+            if (year == 2019)
+            {
+                printf("the next day is out of boundary value of year\n");
+            }
+            else
+                tomm_year = year + 1;
+        }
+        break;
+    case 2:
+        if (day < 28)
+            tomm_day = day + 1;
+        else if (isleap(year) && day == 28)
+            tomm_day = day + 1;
+        else if (day == 28 || day == 29)
+        {
+            tomm_day = 1;
+            tomm_month = 3;
+        }
+        break;
+    }
+    printf("next day is : %d %d %d", tomm_day, tomm_month, tomm_year);
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+TRIANGLE
+#include <stdio.h>
+int main()
+{
+    int a, b, c, c1, c2, c3;
+    char istriangle;
+    do
+    {
+        printf("\n enter 3 integers which are sides of triangle\n");
+        scanf("%d%d%d", &a, &b, &c);
+        printf("\n a=%d\t b=%d\t c=%d", a, b, c);
+        c1 = a >= 1 && a <= 10;
+        c2 = b >= 1 && b <= 10;
+        c3 = c >= 1 && c <= 10;
+        if (!c1)
+            printf("\n the value of a=%d is not the range of permitted value", a);
+        if (!c2)
+            printf("\n the value of b=%d is not the range of permitted value", b);
+        if (!c3)
+            printf("\n the value of c=%d is not the range of permitted value", c);
+    } while (!(c1 && c2 && c3));
+    // to check is it a triangle or not
+    if (a < b + c && b < a + c && c < a + b)
+        istriangle = 'y';
+    else
+        istriangle = 'n';
+    if (istriangle == 'y')
+    {
+        if ((a == b) && (b == c))
+            printf(" equilateral triangle\n");
+        else if ((a != b) && (a != c) && (b != c))
+            printf(" scalene triangle\n");
+        else
+            printf(" isosceles triangle\n");
+    }
+    else
+        printf(" Not a triangle\n");
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+COMMISSION DATAFLOW
+1 //Program 9:(Dataflow Testing for commission calculation)
+2 #include<stdio.h>
+3 int main()
+4 {
+5 int locks, stocks, barrels, tlocks, tstocks, tbarrels;
+6 float lprice, sprice, bprice, lsales, ssales, bsales, sales, comm;
+7 lprice =45.0;
+8 sprice=30.0;
+9 bprice=25.0;
+10 tlocks=0;
+11 tstocks=0;
+12 tbarrels=0;
+    printf("\nenter the number of locks and to exit the loop enter -1 for locks\n");
+13 scanf("%d",&locks);
+14 while(locks!= -1){
+    printf("enter the number of stocks and barrels\n"); 
+15 scanf("%d%d",&stocks, &barrels);
+16 tlocks = tlocks + locks;
+17 tstocks = tstocks + stocks;
+18 tbarrels = btarrels + barrels;
+    printf("\n enter the number of locks and to exit the loop enter -1 for locks\n");
+19 scanf("%d", &locks);
+20 }
+21 printf("\n total locks = %d\”, tlocks);
+22 printf(“total stocks =%d\n”, tstocks);
+23 printf(“total barrels =%d\n", tbarrels);
+24 lsales = lprice*tlocks;
+25 ssales = sprice*tstocks;
+26 bsales = bprice*tbarrels;
+27 sales = lsales + ssales + bsales;
+28 printf("\n the total sales=%f\n", sales);
+29 if(sales > 1800.0)
+30 {
+31 comm=0.10*1000.0;
+32 comm=comm+0.15*800;
+33 comm=comm+0.20*(sales-1800.0);
+   }
+34 else if(sales > 1000)
+35 {
+36 comm =0.10*1000;
+37 comm=comm+0.15*(sales-1000);
+    }
+38 else
+39 { comm=0.10*sales;
+40 }
+41 printf” \n value of commission is\n”);
+42 printf("the commission is=%f\n", comm);
+43 return 0; }
+
+
+
+
+
+
+
+
+
+
+
+
+BINARY SEARCH
+
+#include<stdio.h>
+int binsrc(int x[],int low,int high,int key)  
+{
+int mid;           1
+while(low<=high)   2
+{
+mid=(low+high)/2;
+if(x[mid]==key)    3
+return mid;        8
+if(x[mid]<key)     4
+low=mid+1;         5
+else
+high=mid-1;       6
+}                 7
+return -1;        8
+}                 9
+int main()
+{
+int a[20],key,i,n,succ;
+printf("Enter the n value");
+scanf("%d", &n);
+if(n>0)
+ {
+ printf("enter the elements in ascending order\n");
+ for(i=0;i<n;i++)
+ scanf("%d", &a[i]);
+printf("enter the key element to be searched\n");
+ scanf("%d",&key);
+succ=binsrc(a,0,n-1,key);
+if(succ>=0)
+ printf("Element found in position = %d\n", succ+1);
+else
+ printf("Element not found \n");
+}
+else
+ printf("Number of element should be greater than zero\n");
+ return 0;
+}
